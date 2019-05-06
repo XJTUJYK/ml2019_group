@@ -3,7 +3,8 @@
 
 采用python的nltk自然语言处理包，通过该包下载brown语料库
 
-关于引入nltk的说明http://www.52nlp.cn/tag/%E5%B8%83%E6%9C%97%E8%AF%AD%E6%96%99%E5%BA%93
+关于引入nltk的说明参考http://www.52nlp.cn/tag/%E5%B8%83%E6%9C%97%E8%AF%AD%E6%96%99%E5%BA%93
+
 pip install nltk
 >>> import nltk
 >>> nltk.download()
@@ -13,6 +14,7 @@ pip install nltk
 [nltk_data] Error loading all: <urlopen error [WinError 10060]
 
 以下为查看brown语料库的实例代码
+
 from nltk.corpus import brown
 print(brown.readme())
 print(brown.words()[0:10])
