@@ -1,5 +1,5 @@
 项目描述
-基于HMM与Vetebi的词性标注
+基于HMM与Vitebi的词性标注
 
 采用python的nltk自然语言处理包，通过该包下载brown语料库
 
@@ -41,3 +41,5 @@ redistribution permitted.
 
 ['The', 'Fulton', 'County', 'Grand', 'Jury', 'said', 'Friday', 'an', 'investigation', 'of']
 [('The', 'AT'), ('Fulton', 'NP-TL'), ('County', 'NN-TL'), ('Grand', 'JJ-TL'), ('Jury', 'NN-TL'), ('said', 'VBD'), ('Friday', 'NR'), ('an', 'AT'), ('investigation', 'NN'), ('of', 'IN')]
+
+有关HMM训练参数及Viterbi算法原理参考https://blog.csdn.net/yutianzuijin/article/details/33292841
