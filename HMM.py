@@ -16,18 +16,17 @@ class HMM():
         self.hidden_para_list=[tuple[1] for tuple in self.data]
         self.hidden_para=list(set(self.hidden_para_list))#去除重复的隐藏状态元素
         self.hidden_len=len(self.hidden_para)
+
         self.ob_para_list=[tuple[0] for tuple in self.data]
         self.ob_para=list(set(self.ob_para_list))
         self.ob_len=len(self.ob_para)
-        print(self.data)
-        
-
         self.times=np.array([self.hidden_para_list.count(para) for para in list(set(self.hidden_para_list))])
+
         self.pi=self.times/len(self.hidden_para_list)
         self.A=np.zeros([self.hidden_len,self.hidden_len])
         self.B=np.zeros([self.hidden_len,self.ob_len])
-        print(self.hidden_para)
         self.train()
+        self.print_para()
 
 
     def train(self):
@@ -70,3 +69,7 @@ class HMM():
 
     def print_B(self):
         print(self.B)
+
+
+    def output_to_viterbi(self):
+        return self.pi,self.A,self.B,self.hidden_para,self.ob_para
