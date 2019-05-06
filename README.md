@@ -6,11 +6,12 @@
 关于引入nltk的说明参考http://www.52nlp.cn/tag/%E5%B8%83%E6%9C%97%E8%AF%AD%E6%96%99%E5%BA%93
 
 pip install nltk
->>> import nltk
->>> nltk.download()
+>>>import nltk
+>>>nltk.download()
 在弹出的图形界面中下载all-corpora,其中含有brown，若报错，尝试命令行下载
->>> nltk.download('all')
+>>>nltk.download('all')
 若报以下错，尝试手动下载，参考https://blog.csdn.net/joey_su/article/details/17289621
+
 [nltk_data] Error loading all: <urlopen error [WinError 10060]
 
 以下为查看brown语料库的实例代码
