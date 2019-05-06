@@ -1,1 +1,4 @@
-# ml2019_group
+项目描述
+基于HMM与Vetebi的词性标注
+
+采用python的nltk自然语言处理包，通过该包下载布朗语料库
