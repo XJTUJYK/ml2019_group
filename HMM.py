@@ -28,15 +28,15 @@ class HMM():
         self.A=np.zeros([self.hidden_len,self.hidden_len])
         self.B=np.zeros([self.hidden_len,self.ob_len])
         self.train()
-        self.print_para()
+        #self.print_para()
 
 
     def train(self):
         '''
         calculate A and B
         '''
-        print('M:'+str(self.hidden_len))
-        print('N:'+str(self.ob_len))
+        print('Hidden states:'+str(self.hidden_len))
+        print('Observed states:'+str(self.ob_len))
         '''
         for i in range(self.hidden_len):
             for j in range(self.hidden_len):
@@ -74,6 +74,7 @@ class HMM():
             self.A[i][:]/=self.times[i]
             self.B[i][:]/=self.times[i]
         self.end_time=time.time()
+        print('Current program cost '+str(self.end_time-self.start_time)+'s')
 
 
     def print_para(self):
