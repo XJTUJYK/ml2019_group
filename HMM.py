@@ -35,7 +35,7 @@ class HMM():
         '''
         print('M:'+str(self.hidden_len))
         print('N:'+str(self.ob_len))
-        
+        '''
         for i in range(self.hidden_len):
             for j in range(self.hidden_len):
                 sum_j_after_i=0#对于两词性上下文相连出现的计数，相当于准备计算隐藏状态转移矩阵的元素（只有一层马尔可夫）
@@ -46,10 +46,10 @@ class HMM():
         
         '''
         d_copy=list(self.data).copy()
-        while(len(d_copy)!=0):
-            self.A[self.hidden_para.index(d_copy[0][1])][self.hidden_para.index(d_copy[0][0])]+=1
+        while(len(d_copy)!=1):
+            self.A[self.hidden_para.index(d_copy[0][1])][self.hidden_para.index(d_copy[1][1])]+=1
             d_copy.pop(0)
-        '''
+        
         '''
         for i in range(self.hidden_len):
             for j in range(self.ob_len):
