@@ -1,4 +1,5 @@
 from HMM import HMM
+from viterbi import viterbi
 from nltk.corpus import brown
 import sys
 
