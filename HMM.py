@@ -40,15 +40,13 @@ class HMM():
         print('Observed states:'+str(self.ob_len))
         #直接遍历原数据，复杂度为O(logm*logm*k)
         d_copy=list(self.data).copy()
-        while(len(d_copy)!=1):
+        for i in range(len(d_copy)-1):
             #如果词性x在词性y前面，就在矩阵[x][y]处+1，这样遍历原数据
-            self.A[self.hidden_para.index(d_copy[0][1])][self.hidden_para.index(d_copy[1][1])]+=1
-            d_copy.pop(0)       
+            self.A[self.hidden_para.index(d_copy[i][1])][self.hidden_para.index(d_copy[i+1][1])]+=1
         #复杂度为O(logm*logn*k)，其中n约等于k的几分之一
         d_copy=list(self.data).copy()
-        while(len(d_copy)!=0):
-            self.B[self.hidden_para.index(d_copy[0][1])][self.ob_para.index(d_copy[0][0])]+=1
-            d_copy.pop(0)
+        for i in range(len(d_copy)):
+            self.B[self.hidden_para.index(d_copy[i][1])][self.ob_para.index(d_copy[i][0])]+=1
         for i in range(self.hidden_len):
             #除以先验概率得到条件概率，虽然这里是次数/次数
             self.A[i][:]/=self.times[i]
