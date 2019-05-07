@@ -28,8 +28,10 @@ def loadModel() :
     return paras
 
 def predictCategory(hmm, stc) :
+    # preprocess: split and lower sentence
     words = nltk.word_tokenize(stc)
     words = [ word.lower() for word in words ]
+    # use DP to max observed prob
     pos = viterbi(*paras, words)
     print('HMM tagged:\n', pos)
     # use nltk
@@ -42,6 +44,8 @@ if __name__=='__main__':
 Usage: ./main.py [size_of_training_set] sentence_to_predict')
         exit()
     elif len(sys.argv) == 2 and os.path.exists(MODEL_PATH):
+        # If training num is not given, and cache exists
+        # Then load model
         paras = loadModel()
     else :
         TRAIN_NUM=int(sys.argv[1])
