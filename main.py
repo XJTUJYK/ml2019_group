@@ -7,16 +7,15 @@ from nltk.corpus import brown
 import sys, os
 import pickle
 
-TRAIN_NUM=1000
+TRAIN_NUM=10000
 ENABLE_RATE=False
 TRAIN_NUM_RATE=0.5
 MODEL_PATH = './model/hmm'
 
 def trainModel() :
+    end=TRAIN_NUM
     if ENABLE_RATE:
-        end=TRAIN_NUM*TRAIN_NUM_RATE
-    else:
-        end=TRAIN_NUM
+        end=int(TRAIN_NUM*TRAIN_NUM_RATE)
     dataSet = brown.tagged_words(tagset='universal')[:end]
     dataSet = [ [d[0].lower(), d[1]] for d in dataSet ]
     hmm = HMM(dataSet)
@@ -49,16 +48,21 @@ if __name__=='__main__':
         print('HMM categorying words\n\
 Usage: ./main.py [size_of_training_set] sentence_to_predict')
         exit()
+    elif len(sys.argv) == 2 and sys.argv[1] == '-t' :
+        '''
+        使用长度为TRAIN_NUM的brown词表中的一部分为训练集，另一部分为测试集。
+        注：这样很容易出现找不到对应词的错误。
+        目前训练长度比例为0.5
+        '''
+        ENABLE_RATE=True
+        paras = trainModel()
+        input_words=[tuple[0] for tuple in brown.tagged_words(tagset='universal')[int(TRAIN_NUM*TRAIN_NUM_RATE):TRAIN_NUM]]
+        sentence=' '.join(input_words)
+        predictCategory(paras, sentence)
     elif len(sys.argv) == 2 and os.path.exists(MODEL_PATH):
         # If training num is not given, and cache exists
         # Then load model
         paras = loadModel()
-    elif len(sys.argv) == 2 and sys.argv[1] == '-t' :
-        ENABLE_RATE=True
-        paras = trainModel()
-        input_words=[tuple[0] for tuple in brown.tagged_words(tagset='universal')[TRAIN_NUM*TRAIN_NUM_RATE:TRAIN_NUM]]
-        sentence=' '.join(input_words)
-        predictCategory(paras, )
     else :
         TRAIN_NUM=int(sys.argv[1])
         paras = trainModel()
