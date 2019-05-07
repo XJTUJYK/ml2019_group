@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 
 class HMM():    
@@ -12,6 +13,7 @@ class HMM():
         接收一个元组的列表，每个元组有两个元素，第一个为可观测状态数据，第二个为隐藏状态数据
         pi的key为隐藏状态，value为先验概率
         '''
+        self.start_time=time.time()
         self.data=args
         self.hidden_para_list=[tuple[1] for tuple in self.data]
         self.hidden_para=list(set(self.hidden_para_list))#去除重复的隐藏状态元素
@@ -45,6 +47,7 @@ class HMM():
                 self.A[i][j]=sum_j_after_i/self.times[i]#i在j前出现的次数除以i出现的次数，相当于条件概率j|i，就是i到j的转移概率
         
         '''
+        #直接遍历原数据，复杂度为O(logm*logm*k)
         d_copy=list(self.data).copy()
         while(len(d_copy)!=1):
             self.A[self.hidden_para.index(d_copy[0][1])][self.hidden_para.index(d_copy[1][1])]+=1
@@ -62,17 +65,20 @@ class HMM():
                 self.B[i][j]=num_j_match_i/self.times[i]#i和j匹配的次数除以词性i出现的次数，相当于条件概率j|i，就是词性i到词j的转移概率
         '''
 
+        #复杂度为O(logm*logn*k)，其中n约等于k的几分之一
         d_copy=list(self.data).copy()
         while(len(d_copy)!=0):
             self.B[self.hidden_para.index(d_copy[0][1])][self.ob_para.index(d_copy[0][0])]+=1
             d_copy.pop(0)
 
+        self.end_time=time.time()
 
 
     def print_para(self):
         self.print_pi()
         self.print_A()
         self.print_B()
+        print('Current program cost '+str(self.end_time-self.start_time)+'s')
 
 
     def print_pi(self):
