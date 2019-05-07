@@ -70,7 +70,9 @@ class HMM():
         while(len(d_copy)!=0):
             self.B[self.hidden_para.index(d_copy[0][1])][self.ob_para.index(d_copy[0][0])]+=1
             d_copy.pop(0)
-
+        for i in range(self.hidden_len):
+            self.A[i][:]/=self.times[i]
+            self.B[i][:]/=self.times[i]
         self.end_time=time.time()
 
 
