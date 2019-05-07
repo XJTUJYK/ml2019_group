@@ -17,7 +17,7 @@ def viterbi(Pi, A, B, hList, oList, stc) :
     dp = [ [ 0 ] * N for i in range(T) ]
     # Fill 1st row with Pi
     for i in range(N) :
-        dp[0][i] = Pi[i]
+        dp[0][i] = Pi[i] * B[i][stcInd[0]]
     # Fill other rows by dp[t][i] = max([dp[t-1][j] for j in range(N)] * a[j][i] * b[i][o_t])
     # O(TN^2)
     for t in range(1,T) :
@@ -30,6 +30,6 @@ def viterbi(Pi, A, B, hList, oList, stc) :
         step = [ dp[t][j] * A[j][pos[-1]] * B[pos[-1]][stcInd[t+1]] for j in range(N) ]
         pos.append(step.index(max(step)))
     # Substitude hidden chain
-    pos = [ [ stc[i], hList[p] ] for i,p in enumerate(pos) ]
+    pos = [ ( stc[i], hList[p] ) for i,p in enumerate(pos[::-1]) ]
     
     return pos
