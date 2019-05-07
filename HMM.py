@@ -35,6 +35,7 @@ class HMM():
         '''
         print('M:'+str(self.hidden_len))
         print('N:'+str(self.ob_len))
+        
         for i in range(self.hidden_len):
             for j in range(self.hidden_len):
                 sum_j_after_i=0#对于两词性上下文相连出现的计数，相当于准备计算隐藏状态转移矩阵的元素（只有一层马尔可夫）
@@ -42,14 +43,29 @@ class HMM():
                     if self.hidden_para[i]==self.hidden_para_list[k] and self.hidden_para[j]==self.hidden_para_list[k+1]:#i刚好在j前面
                         sum_j_after_i+=1
                 self.A[i][j]=sum_j_after_i/self.times[i]#i在j前出现的次数除以i出现的次数，相当于条件概率j|i，就是i到j的转移概率
-
+        
+        '''
+        d_copy=list(self.data).copy()
+        while(len(d_copy)!=0):
+            self.A[self.hidden_para.index(d_copy[0][1])][self.hidden_para.index(d_copy[0][0])]+=1
+            d_copy.pop(0)
+        '''
+        '''
         for i in range(self.hidden_len):
             for j in range(self.ob_len):
                 num_j_match_i=0#对于某一词对应（匹配）某一词性的次数，相当于准备计算混淆矩阵的元素
+                self.d_copy=self.data.copy()
                 for k in range(len(self.data)):
-                    if self.data[k][0]==self.ob_para[j] and self.data[k][1]==self.hidden_para[i]:#输入串中i刚好是词j所对应的词性
+                    if self.d_copy[k][0]==self.ob_para[j] and self.d_copy[k][1]==self.hidden_para[i]:#输入串中i刚好是词j所对应的词性
+                        self.d_copy.pop(0)
                         num_j_match_i+=1
                 self.B[i][j]=num_j_match_i/self.times[i]#i和j匹配的次数除以词性i出现的次数，相当于条件概率j|i，就是词性i到词j的转移概率
+        '''
+
+        d_copy=list(self.data).copy()
+        while(len(d_copy)!=0):
+            self.B[self.hidden_para.index(d_copy[0][1])][self.ob_para.index(d_copy[0][0])]+=1
+            d_copy.pop(0)
 
 
 
