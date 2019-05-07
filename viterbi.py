@@ -1,4 +1,4 @@
-def viterbi(Pi, A, B, hList, oList, stc) :
+def viterbi(Pi, A, B, hList, oList, two_level=False, stc=[]) :
     '''
     the Viterbi algorithm
     Viterbi use dp to find the best path (chain) of HMM hidden variables
@@ -12,6 +12,13 @@ def viterbi(Pi, A, B, hList, oList, stc) :
     except ValueError :
         print("Unprecedented word encountered! Please train more!")
         return None
+    if two_level:
+        pass
+    else:
+        normal(Pi, A, B, hList, oList, stc)
+
+
+def normal(Pi, A, B, hList, oList, stc):
     # Confuse matrix B is H * O, where H is the number of hidden vars, i.e. number of POS
     N, T = B.shape[0], len(stc)
     dp = [ [ 0 ] * N for i in range(T) ]
@@ -33,3 +40,7 @@ def viterbi(Pi, A, B, hList, oList, stc) :
     pos = [ ( stc[i], hList[p] ) for i,p in enumerate(pos[::-1]) ]
     
     return pos
+
+
+def two_level(Pi, A, B, hList, oList, stc):
+    pass

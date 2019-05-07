@@ -18,7 +18,7 @@ def trainModel() :
         end=int(TRAIN_NUM*TRAIN_NUM_RATE)
     dataSet = brown.tagged_words(tagset='universal')[:end]
     dataSet = [ [d[0].lower(), d[1]] for d in dataSet ]
-    hmm = HMM(dataSet)
+    hmm = HMM(args=dataSet)
     paras = hmm.output_to_viterbi()
     # cache model
     fo = open(MODEL_PATH, 'wb')
@@ -37,7 +37,7 @@ def predictCategory(hmm, stc) :
     words = nltk.word_tokenize(stc)
     words = [ word.lower() for word in words ]
     # use DP to max observed prob
-    pos = viterbi(*paras, words)
+    pos = viterbi(*paras, stc=words)
     print('HMM tagged:\n', pos)
     # use nltk
     taggedWords = nltk.pos_tag(words, tagset='universal')
