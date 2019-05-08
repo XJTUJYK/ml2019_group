@@ -72,7 +72,6 @@ class HMM():
         采用更为复杂的马尔可夫链，此时某一个观测状态同时由当前隐状态和上一个隐状态决定
         首先要统计词性i刚好在j前面出现的次数，遍历原数据并以i*self.hidden_len+j的下标存到长度为self.hidden_len平方的数组里
         '''
-        self.ij_times=np.zeros(self.hidden_len**2)
         for k in range(1,len(self.data)):
             i=self.hi_index(k-1)
             j=self.hi_index(k)
@@ -107,5 +106,5 @@ class HMM():
         返回HMM五元组
         '''
         if self.two_level_train:
-            return self.pi,self.A,self.two_level_B,self.hidden_para,self.ob_para,self.two_level_train
+            return self.ij_times/len(self.data),self.A,self.two_level_B,self.hidden_para,self.ob_para,self.two_level_train
         return self.pi,self.A,self.B,self.hidden_para,self.ob_para
