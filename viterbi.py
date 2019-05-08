@@ -55,8 +55,11 @@ def two_level(Pi, A, B, hList, oList, stc):
     for t in range(1,T):
         for i in range(N):
             for j in range(N):
-                dp[t][i][j] = max([ dp[t-1][k] * A[k][j] * B[i][j][stcInd[t]] for k in range(N) ])
+                dp[t][i][j] = max([ dp[t-1][ii][i] * A[i][j] * B[i][j][stcInd[t]] for ii in range(N) ])#jj=i
     pos = []
-    pos.append(dp[-1].index(max(dp[-1])))
+    a=np[-1]
+    #获取np最后一个矩阵的最大值索引，是一个元组
+    pos.append(np.unravel_index(a.argmax(), a.shape))
     for t in range(T-2, -1, -1):
-        step = [ dp[t][i][j] * A[j]
+        #比较模糊的是此处A的索引，以及外层的循环是否该多出一个
+        step = [ dp[t][i][j] * A[j][pos[-1]] * B[pos[-1]][stcInd[t+1]] for j in range(N) ]
